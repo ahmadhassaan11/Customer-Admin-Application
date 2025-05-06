@@ -37,6 +37,20 @@ export default function Subscriptions() {
     queryKey: ['/api/products'],
   });
 
+  const { data: offerings } = useQuery({
+    queryKey: ['/api/product-offerings'],
+  });
+
+  const accountLookup = Object.fromEntries(
+    accounts?.map((a: Account) => [a.id, a.name]) || []
+  );
+  const productLookup = Object.fromEntries(
+    products?.map((p: Product) => [p.id, p.name]) || []
+  );
+  const offeringLookup = Object.fromEntries(
+    offerings?.map((o: ProductOffering) => [o.id, o.name]) || []
+  );
+
   // Fetch specific subscription details when one is selected
   const { data: selectedSubscription } = useQuery({
     queryKey: ['/api/subscriptions', selectedSubscriptionId],
@@ -218,18 +232,9 @@ export default function Subscriptions() {
                           onClick={() => handleViewSubscription(subscription.id)}
                         >
                           <TableCell>{subscription.id}</TableCell>
-                          <TableCell>
-                            {/* Ideally you'd have account name here */}
-                            {subscription.accountId}
-                          </TableCell>
-                          <TableCell>
-                            {/* Ideally you'd have product name here */}
-                            {subscription.productId}
-                          </TableCell>
-                          <TableCell>
-                            {/* Ideally you'd have offering name here */}
-                            {subscription.productOfferingId}
-                          </TableCell>
+                          <TableCell>{accountLookup[subscription.accountId] || 'Unknown'}</TableCell>
+                          <TableCell>{productLookup[subscription.productId] || 'Unknown'}</TableCell>
+                          <TableCell>{offeringLookup[subscription.productOfferingId] || 'Unknown'}</TableCell>
                           <TableCell>{subscription.credits}</TableCell>
                           <TableCell>{new Date(subscription.startingTs).toLocaleDateString()}</TableCell>
                           <TableCell>
