@@ -1,0 +1,1009 @@
+{
+  "id": "275692d4-586a-453c-b2d3-f1d9bf7ea2b9",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.operations.account_role": {
+      "name": "operations.account_role",
+      "schema": "",
+      "columns": {
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "operations.account_role_role_unique": {
+          "name": "operations.account_role_role_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "role"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.account_type": {
+      "name": "operations.account_type",
+      "schema": "",
+      "columns": {
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "operations.account_type_type_unique": {
+          "name": "operations.account_type_type_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "type"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.account_user": {
+      "name": "operations.account_user",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "account_role": {
+          "name": "account_role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.account_user_user_id_operations.user_user_id_fk": {
+          "name": "operations.account_user_user_id_operations.user_user_id_fk",
+          "tableFrom": "operations.account_user",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.account_user_account_id_operations.account_account_id_fk": {
+          "name": "operations.account_user_account_id_operations.account_account_id_fk",
+          "tableFrom": "operations.account_user",
+          "tableTo": "operations.account",
+          "columnsFrom": [
+            "account_id"
+          ],
+          "columnsTo": [
+            "account_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.account_user_account_role_operations.account_role_role_fk": {
+          "name": "operations.account_user_account_role_operations.account_role_role_fk",
+          "tableFrom": "operations.account_user",
+          "tableTo": "operations.account_role",
+          "columnsFrom": [
+            "account_role"
+          ],
+          "columnsTo": [
+            "role"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "operations.account_user_user_id_account_id_account_role_pk": {
+          "name": "operations.account_user_user_id_account_id_account_role_pk",
+          "columns": [
+            "user_id",
+            "account_id",
+            "account_role"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.account": {
+      "name": "operations.account",
+      "schema": "",
+      "columns": {
+        "account_id": {
+          "name": "account_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "account_name": {
+          "name": "account_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "account_type": {
+          "name": "account_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "account_status": {
+          "name": "account_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creation_ts": {
+          "name": "creation_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "update_ts": {
+          "name": "update_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.account_account_type_operations.account_type_type_fk": {
+          "name": "operations.account_account_type_operations.account_type_type_fk",
+          "tableFrom": "operations.account",
+          "tableTo": "operations.account_type",
+          "columnsFrom": [
+            "account_type"
+          ],
+          "columnsTo": [
+            "type"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.activity": {
+      "name": "operations.activity",
+      "schema": "",
+      "columns": {
+        "activity_type": {
+          "name": "activity_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "operations.activity_activity_type_unique": {
+          "name": "operations.activity_activity_type_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "activity_type"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.auth_users": {
+      "name": "auth_users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_admin": {
+          "name": "is_admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "auth_users_user_id_operations.user_user_id_fk": {
+          "name": "auth_users_user_id_operations.user_user_id_fk",
+          "tableFrom": "auth_users",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "auth_users_username_unique": {
+          "name": "auth_users_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.customer_data.contact_type": {
+      "name": "customer_data.contact_type",
+      "schema": "",
+      "columns": {
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "customer_data.contact_type_type_unique": {
+          "name": "customer_data.contact_type_type_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "type"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.product_offering": {
+      "name": "operations.product_offering",
+      "schema": "",
+      "columns": {
+        "offering_id": {
+          "name": "offering_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "offering_name": {
+          "name": "offering_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "offering_description": {
+          "name": "offering_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rate_per_credit": {
+          "name": "rate_per_credit",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.product_offering_product_id_operations.product_product_id_fk": {
+          "name": "operations.product_offering_product_id_operations.product_product_id_fk",
+          "tableFrom": "operations.product_offering",
+          "tableTo": "operations.product",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "product_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.product": {
+      "name": "operations.product",
+      "schema": "",
+      "columns": {
+        "product_id": {
+          "name": "product_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "product_name": {
+          "name": "product_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "current_version": {
+          "name": "current_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creation_date": {
+          "name": "creation_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "update_date": {
+          "name": "update_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.report_transaction": {
+      "name": "operations.report_transaction",
+      "schema": "",
+      "columns": {
+        "report_id": {
+          "name": "report_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transaction_id": {
+          "name": "transaction_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.report_transaction_report_id_customer_data.report_report_id_fk": {
+          "name": "operations.report_transaction_report_id_customer_data.report_report_id_fk",
+          "tableFrom": "operations.report_transaction",
+          "tableTo": "customer_data.report",
+          "columnsFrom": [
+            "report_id"
+          ],
+          "columnsTo": [
+            "report_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.report_transaction_transaction_id_operations.subscription_transaction_transaction_id_fk": {
+          "name": "operations.report_transaction_transaction_id_operations.subscription_transaction_transaction_id_fk",
+          "tableFrom": "operations.report_transaction",
+          "tableTo": "operations.subscription_transaction",
+          "columnsFrom": [
+            "transaction_id"
+          ],
+          "columnsTo": [
+            "transaction_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.customer_data.report": {
+      "name": "customer_data.report",
+      "schema": "",
+      "columns": {
+        "report_id": {
+          "name": "report_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "report_name": {
+          "name": "report_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creation_ts": {
+          "name": "creation_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "knowledge_base_version": {
+          "name": "knowledge_base_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "report_cost_in_credits": {
+          "name": "report_cost_in_credits",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.subscription_transaction": {
+      "name": "operations.subscription_transaction",
+      "schema": "",
+      "columns": {
+        "transaction_id": {
+          "name": "transaction_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "subscription_id": {
+          "name": "subscription_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "credit_add": {
+          "name": "credit_add",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "credit_subtract": {
+          "name": "credit_subtract",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "authorizing_user_id": {
+          "name": "authorizing_user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transaction_ts": {
+          "name": "transaction_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.subscription_transaction_subscription_id_operations.subscription_subscription_id_fk": {
+          "name": "operations.subscription_transaction_subscription_id_operations.subscription_subscription_id_fk",
+          "tableFrom": "operations.subscription_transaction",
+          "tableTo": "operations.subscription",
+          "columnsFrom": [
+            "subscription_id"
+          ],
+          "columnsTo": [
+            "subscription_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.subscription_transaction_authorizing_user_id_operations.user_user_id_fk": {
+          "name": "operations.subscription_transaction_authorizing_user_id_operations.user_user_id_fk",
+          "tableFrom": "operations.subscription_transaction",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "authorizing_user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.subscription": {
+      "name": "operations.subscription",
+      "schema": "",
+      "columns": {
+        "subscription_id": {
+          "name": "subscription_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "product_offering_id": {
+          "name": "product_offering_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "credits": {
+          "name": "credits",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "starting_ts": {
+          "name": "starting_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "expiration_ts": {
+          "name": "expiration_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.subscription_account_id_operations.account_account_id_fk": {
+          "name": "operations.subscription_account_id_operations.account_account_id_fk",
+          "tableFrom": "operations.subscription",
+          "tableTo": "operations.account",
+          "columnsFrom": [
+            "account_id"
+          ],
+          "columnsTo": [
+            "account_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.subscription_product_id_operations.product_product_id_fk": {
+          "name": "operations.subscription_product_id_operations.product_product_id_fk",
+          "tableFrom": "operations.subscription",
+          "tableTo": "operations.product",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "product_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.subscription_product_offering_id_operations.product_offering_offering_id_fk": {
+          "name": "operations.subscription_product_offering_id_operations.product_offering_offering_id_fk",
+          "tableFrom": "operations.subscription",
+          "tableTo": "operations.product_offering",
+          "columnsFrom": [
+            "product_offering_id"
+          ],
+          "columnsTo": [
+            "offering_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.user_activity": {
+      "name": "operations.user_activity",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "activity_type": {
+          "name": "activity_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creation_ts": {
+          "name": "creation_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "meta_data": {
+          "name": "meta_data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.user_activity_user_id_operations.user_user_id_fk": {
+          "name": "operations.user_activity_user_id_operations.user_user_id_fk",
+          "tableFrom": "operations.user_activity",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.user_activity_activity_type_operations.activity_activity_type_fk": {
+          "name": "operations.user_activity_activity_type_operations.activity_activity_type_fk",
+          "tableFrom": "operations.user_activity",
+          "tableTo": "operations.activity",
+          "columnsFrom": [
+            "activity_type"
+          ],
+          "columnsTo": [
+            "activity_type"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.customer_data.user_contact": {
+      "name": "customer_data.user_contact",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contact_type": {
+          "name": "contact_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contact_note": {
+          "name": "contact_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contact": {
+          "name": "contact",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "customer_data.user_contact_user_id_operations.user_user_id_fk": {
+          "name": "customer_data.user_contact_user_id_operations.user_user_id_fk",
+          "tableFrom": "customer_data.user_contact",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "customer_data.user_contact_contact_type_customer_data.contact_type_type_fk": {
+          "name": "customer_data.user_contact_contact_type_customer_data.contact_type_type_fk",
+          "tableFrom": "customer_data.user_contact",
+          "tableTo": "customer_data.contact_type",
+          "columnsFrom": [
+            "contact_type"
+          ],
+          "columnsTo": [
+            "type"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.user_report": {
+      "name": "operations.user_report",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "report_id": {
+          "name": "report_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_owner": {
+          "name": "is_owner",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "can_share": {
+          "name": "can_share",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.user_report_user_id_operations.user_user_id_fk": {
+          "name": "operations.user_report_user_id_operations.user_user_id_fk",
+          "tableFrom": "operations.user_report",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.user_report_report_id_customer_data.report_report_id_fk": {
+          "name": "operations.user_report_report_id_customer_data.report_report_id_fk",
+          "tableFrom": "operations.user_report",
+          "tableTo": "customer_data.report",
+          "columnsFrom": [
+            "report_id"
+          ],
+          "columnsTo": [
+            "report_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.user_subscription": {
+      "name": "operations.user_subscription",
+      "schema": "",
+      "columns": {
+        "subscription_id": {
+          "name": "subscription_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "authorized_user": {
+          "name": "authorized_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "operations.user_subscription_subscription_id_operations.subscription_subscription_id_fk": {
+          "name": "operations.user_subscription_subscription_id_operations.subscription_subscription_id_fk",
+          "tableFrom": "operations.user_subscription",
+          "tableTo": "operations.subscription",
+          "columnsFrom": [
+            "subscription_id"
+          ],
+          "columnsTo": [
+            "subscription_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "operations.user_subscription_authorized_user_operations.user_user_id_fk": {
+          "name": "operations.user_subscription_authorized_user_operations.user_user_id_fk",
+          "tableFrom": "operations.user_subscription",
+          "tableTo": "operations.user",
+          "columnsFrom": [
+            "authorized_user"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.operations.user": {
+      "name": "operations.user",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "creation_ts": {
+          "name": "creation_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "last_update_ts": {
+          "name": "last_update_ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
