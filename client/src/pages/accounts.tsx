@@ -253,7 +253,7 @@ export default function Accounts() {
       <AccountDetails 
         open={showAccountDetails}
         onClose={() => setShowAccountDetails(false)}
-        account={selectedAccount}
+        account={selectedAccount?.find(acc => acc.id === selectedAccountId)}
         accountUsers={accountUsers}
         subscriptions={subscriptions}
         loading={!selectedAccount}
