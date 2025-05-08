@@ -143,13 +143,13 @@ export default function AccountDetails({
                           <div className="flex-shrink-0 h-10 w-10 mr-4">
                             <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
                               <span className="text-primary-700 font-medium">
-                                {accountUser.user.firstName?.[0]}{accountUser.user.lastName?.[0]}
+                                {accountUser.user?.firstName?.[0]}{accountUser.user?.lastName?.[0]}
                               </span>
                             </div>
                           </div>
                           <div>
                             <div className="text-sm font-medium text-gray-900">
-                              {accountUser.user.firstName} {accountUser.user.lastName}
+                              {accountUser.user?.firstName} {accountUser.user?.lastName}
                             </div>
                           </div>
                         </TableCell>
@@ -159,15 +159,15 @@ export default function AccountDetails({
                         </TableCell>
                         <TableCell>{accountUser.accountRole}</TableCell>
                         <TableCell>
-                          <Badge variant="outline" className={`${accountUser.user.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                            {accountUser.user.isActive ? 'Active' : 'Inactive'}
+                          <Badge variant="outline" className={`${accountUser.user?.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                            {accountUser.user?.isActive ? 'Active' : 'Inactive'}
                           </Badge>
                         </TableCell>
                         <TableCell>
                           <div className="flex space-x-2">
                             <Button variant="ghost" size="sm">Edit</Button>
                             <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-900">
-                              {accountUser.user.isActive ? 'Deactivate' : 'Activate'}
+                              {accountUser.user?.isActive ? 'Deactivate' : 'Activate'}
                             </Button>
                           </div>
                         </TableCell>
