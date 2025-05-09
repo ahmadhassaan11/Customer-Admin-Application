@@ -175,7 +175,7 @@ export default function Users() {
                           {user.firstName} {user.lastName}
                         </TableCell>
                         <TableCell>{user.contactInfo}</TableCell>
-                        <TableCell>--</TableCell>
+                        <TableCell>{user.accounts}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className={user.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
                             {user.isActive ? 'Active' : 'Inactive'}
