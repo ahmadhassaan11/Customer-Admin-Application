@@ -58,8 +58,28 @@ export const accountUsers = pgTable("operations.account_user", {
   };
 });
 
+// User Roles
+export const userRoles = pgTable("operations.user_role", {
+  role: text("role").notNull().unique(),
+});
+
+// Bridge table to assign accounts to users
+export const userAccounts = pgTable("operations.user_account", {
+  accountId: integer("account_id").notNull().references(() => accounts.id),
+  userId: integer("user_id").notNull().references(() => users.id),
+  userRole: text("user_role").notNull().references(() => userRoles.role),
+}, (table) => {
+  return {
+    pk: primaryKey({ columns: [table.accountId, table.userId, table.userRole] }),
+  };
+});
+
+
 // Account User Insert Schema
 export const insertAccountUserSchema = createInsertSchema(accountUsers);
+
+// User Account Insert Schema
+export const insertUserAccountSchema = createInsertSchema(userAccounts);
 
 // Activity Types
 export const activityTypes = pgTable("operations.activity", {
@@ -218,6 +238,9 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 
 export type AccountUser = typeof accountUsers.$inferSelect;
 export type InsertAccountUser = z.infer<typeof insertAccountUserSchema>;
+
+export type UserAccount = typeof userAccounts.$inferSelect;
+export type InsertUserAccount = z.infer<typeof insertUserAccountSchema>;
 
 export type UserContact = typeof userContacts.$inferSelect;
 

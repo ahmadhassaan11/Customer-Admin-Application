@@ -261,7 +261,7 @@ export default function Users() {
               View and manage user information and access
             </DialogDescription>
           </DialogHeader>
-
+           <>
           {selectedUser && (
             <Tabs defaultValue="info">
               <TabsList className="grid w-full grid-cols-3">
@@ -365,7 +365,7 @@ export default function Users() {
               </TabsContent>
             </Tabs>
           )}
-
+          </>
           <DialogFooter>
             <Button 
               variant="outline" 

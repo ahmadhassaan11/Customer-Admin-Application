@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { eq, and, gte, lte, sql, desc, count, sum, isNull, or, inArray } from "drizzle-orm";
+import { eq, and, gte, lte, sql, desc, count, sum, isNull, or, inArray, getTableColumns } from "drizzle-orm";
 import * as schema from "@shared/schema";
 import bcrypt from "bcrypt";
 
@@ -26,6 +26,12 @@ export interface IStorage {
   removeUserFromAccount(userId: number, accountId: number, role: string): Promise<void>;
   updateUserRole(userId: number, accountId: number, oldRole: string, newRole: string): Promise<schema.AccountUser | undefined>;
   
+  // User Account operations
+  getUserAccounts(userId: number): Promise<(schema.UserAccount & { account: schema.Account })[]>;
+  addAccountToUser(userAccount: schema.InsertUserAccount): Promise<schema.UserAccount>;
+  removeAccountFromUser(accountId: number, userId: number, role: string): Promise<void>;
+  updateAccountRole(accountId: number, userId: number, oldRole: string, newRole: string): Promise<schema.UserAccount | undefined>;
+
   // Product operations
   getProducts(): Promise<schema.Product[]>;
   getProduct(id: number): Promise<schema.Product | undefined>;
@@ -124,8 +130,28 @@ export class DatabaseStorage implements IStorage {
   }
   
   // User operations
-  async getUsers(): Promise<schema.User[]> {
-    return db.select().from(schema.users);
+  async getUsers(): Promise<(schema.User & {accounts: number })[]> {
+    try{
+
+    
+      const user = await db.select({
+        id: schema.users.id,
+        creationTs: schema.users.creationTs,
+        firstName:schema.users.firstName,
+        lastName:schema.users.lastName,
+        contactInfo:schema.users.contactInfo,
+        isActive:schema.users.isActive,
+        lastUpdateTs:schema.users.lastUpdateTs,
+        accounts: sql<number>`(${db.select({count: sql`count(*)::integer`}).from(schema.accountUsers).where(eq(schema.accountUsers.userId, schema.users.id))})`.as('accounts')
+  
+      }).from(schema.users)
+      
+      return user;
+    }
+    catch (error){
+      console.log(error)
+      throw error
+    }
   }
   
   async getUser(id: number): Promise<schema.User | undefined> {
@@ -184,6 +210,48 @@ export class DatabaseStorage implements IStorage {
       userId,
       accountId,
       accountRole: newRole
+    });
+  }
+  
+// User Account operations
+async getUserAccounts(userId: number): Promise<(schema.UserAccount & { account: schema.Account })[]> {
+  return db.select({
+    accountId: schema.userAccounts.accountId,
+    userId: schema.userAccounts.userId,
+    userRole: schema.userAccounts.userRole,
+    account: schema.accounts
+  })
+  .from(schema.userAccounts)
+  .where(eq(schema.userAccounts.userId, userId))
+  .innerJoin(schema.accounts, eq(schema.userAccounts.accountId, schema.accounts.id));
+}
+
+
+  async addAccountToUser(userAccount: schema.InsertUserAccount): Promise<schema.UserAccount> {
+    const [newUserAccount] = await db.insert(schema.userAccounts).values(userAccount).returning();
+    return newUserAccount;
+  }
+  
+  async removeAccountFromUser(accountId: number, userId: number, role: string): Promise<void> {
+    await db.delete(schema.userAccounts)
+      .where(
+        and(
+          eq(schema.userAccounts.accountId, accountId),
+          eq(schema.userAccounts.userId, userId),
+          eq(schema.userAccounts.userRole, role)
+        )
+      );
+  }
+  
+  async updateAccountRole(accountId: number, userId: number, oldRole: string, newRole: string): Promise<schema.UserAccount | undefined> {
+    // Delete the old role
+    await this.removeAccountFromUser(accountId, userId, oldRole);
+  
+    // Add the new role
+    return this.addAccountToUser({
+      accountId,
+      userId,
+      userRole: newRole
     });
   }
   

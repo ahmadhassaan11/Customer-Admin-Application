@@ -211,6 +211,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(400).json({ message: "Error removing user from account" });
     }
   });
+
+// User Account routes 
+router.get("/users/:id/accounts", async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const userAccounts = await storage.getUserAccounts(userId);
+    res.json(userAccounts);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching user accounts" });
+  }
+});
+
+router.post("/users/accounts", async (req, res) => {
+  try {
+    const userAccountData = schema.insertUserAccountSchema.parse(req.body);
+    const userAccount = await storage.addAccountToUser(userAccountData);
+    res.status(201).json(userAccount);
+  } catch (err) {
+    res.status(400).json({ message: "Invalid user account data" });
+  }
+});
+
+router.delete("/users/accounts", async (req, res) => {
+  try {
+    const { accountId, userId, role } = req.body;
+    await storage.removeAccountFromUser(accountId, userId, role);
+    res.status(204).send();
+  } catch (err) {
+    res.status(400).json({ message: "Error removing account from user" });
+  }
+});
   
   // Product routes
   router.get("/products", async (req, res) => {
